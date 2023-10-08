@@ -22,9 +22,14 @@ class ProcessOrdersController extends Controller
      * @param Product $product
      * @param \Illuminate\Http\Request $request
      * @return array
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function __invoke($product_id, Request $request)
     {
+        $this->validate($request, [
+            'payment_method' => 'required|string'
+        ]);
+
         return $this->orderProcessingService->execute($product_id, $request);
     }
 }
